@@ -1,4 +1,4 @@
-package com.tylersmith.memorygame.models;
+package com.memoryGame.models;
 
 public enum TurnResult {
     FIRST_CARD_FLIPPED,
