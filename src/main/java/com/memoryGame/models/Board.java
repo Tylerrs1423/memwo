@@ -1,5 +1,7 @@
 package com.memoryGame.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,6 +34,7 @@ public class Board {
         return boardCards;
     }
 
+    @JsonIgnore
     public List<Card> getCards() {
         return cards;
     }

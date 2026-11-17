@@ -12,10 +12,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class GameRepository {
     private final Map<String, Game> games = new ConcurrentHashMap<>();
 
-    public String createGame(Game game) {
-        String gameId = UUID.randomUUID().toString();
-        games.put(gameId,game);
-        return gameId;
+    public Game createGame(Game game) {
+        games.put(game.getGameId(), game);
+        return game;
     }
 
     public Game getGame(String gameId){
@@ -29,7 +28,8 @@ public class GameRepository {
     public static void main(String[] args) {
         GameRepository repo = new GameRepository();
 
-        String gameId = repo.createGame(new Game(new Board(BoardSize.MEDIUM)));
+        Game game = repo.createGame(new Game(new Board(BoardSize.MEDIUM)));
+        String gameId = game.getGameId();
         System.out.println(repo.games.get(gameId));
         repo.deleteGame(gameId);
         System.out.println(repo.games.get(gameId));

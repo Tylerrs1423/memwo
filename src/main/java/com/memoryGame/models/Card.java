@@ -1,5 +1,7 @@
 package com.memoryGame.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Card {
     private CardStatus status;
     private String value;
@@ -33,7 +35,7 @@ public class Card {
     }
 
     public String getValue() {
-        return value;
+        return (isFlipped() || isMatched()) ? value : null;
     }
 
     public CardStatus getStatus() {

@@ -19,5 +19,9 @@ public class GameController {
         return gameService.setupGame(boardSize);
     }
 
+    @PutMapping("/{gameId}/flip")
+    public GameService.FlipResponse flipCard(@PathVariable String gameId, @RequestParam int cardId){
+        return gameService.flipCard(gameId, cardId);
+    }
 
 }

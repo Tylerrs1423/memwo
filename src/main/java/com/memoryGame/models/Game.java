@@ -3,8 +3,10 @@ package com.memoryGame.models;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.UUID;
 
 public class Game {
+    private final String gameId;
     private final Board board;
     private Card firstFlippedCard;
     private int moves;
@@ -13,6 +15,7 @@ public class Game {
     private final List<Integer> leaderboard;
 
     public Game(Board board) {
+        this.gameId = UUID.randomUUID().toString();
         this.board = board;
         this.leaderboard = new ArrayList<>(List.of(0,0));
     }
@@ -72,6 +75,8 @@ public class Game {
         }
 
         firstFlippedCard.hide();
+        selected.hide();
+        firstFlippedCard = null;
         playerTurn = (playerTurn == 0) ? 1 : 0;
         return TurnResult.NO_MATCH;
     }
@@ -98,7 +103,6 @@ public class Game {
         }
     }
 
-
     public Board getBoard() {
         return board;
     }
@@ -117,5 +121,9 @@ public class Game {
 
     public List<Integer> getLeaderboard(){
         return leaderboard;
+    }
+
+    public String getGameId() {
+        return gameId;
     }
 }
