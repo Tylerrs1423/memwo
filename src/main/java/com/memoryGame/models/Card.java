@@ -35,17 +35,20 @@ public class Card {
     }
 
     public String getValue() {
-        return (isFlipped() || isMatched()) ? value : null;
+        return value;
     }
+
 
     public CardStatus getStatus() {
         return status;
     }
 
+    @JsonIgnore
     public boolean isMatched(){
         return status == CardStatus.MATCHED;
     }
 
+    @JsonIgnore
     public boolean isFlipped(){
         return status == CardStatus.FLIPPED;
     }

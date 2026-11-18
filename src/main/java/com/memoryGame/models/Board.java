@@ -18,19 +18,19 @@ public class Board {
 
     private List<Card> createBoard(BoardSize size) {
         List<String> uniqueValues = UniquePicker.getUniqueValues(size);
-        List<Card> tempCards = new ArrayList<>();
-        int id = 0;
-        for (String value: uniqueValues){
-            tempCards.add(new Card(value, id++));
-            tempCards.add(new Card(value, id++));
+        List<String> allValues = new ArrayList<>();
+
+        for (String value : uniqueValues){
+            allValues.add(value);
+            allValues.add(value);
         }
-        Collections.shuffle(tempCards, ThreadLocalRandom.current());
+
+        Collections.shuffle(allValues, ThreadLocalRandom.current());
 
         List<Card> boardCards = new ArrayList<>();
-        for (int i = 0; i < tempCards.size(); i++){
-            boardCards.add(new Card(tempCards.get(i).getValue(), i));
+        for (int i = 0; i < allValues.size(); i++){
+            boardCards.add(new Card(allValues.get(i), i));
         }
-
         return boardCards;
     }
 

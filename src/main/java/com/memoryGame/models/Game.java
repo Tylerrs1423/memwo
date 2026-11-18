@@ -1,5 +1,7 @@
 package com.memoryGame.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -9,6 +11,7 @@ public class Game {
     private final String gameId;
     private final Board board;
     private Card firstFlippedCard;
+    private Card secondFlippedCard;
     private int moves;
     private int matches;
     private int playerTurn;
@@ -53,6 +56,11 @@ public class Game {
             return TurnResult.INVALID_MOVE;
         }
 
+        if (firstFlippedCard != null && secondFlippedCard != null) {
+            firstFlippedCard = null;
+            secondFlippedCard = null;
+        }
+
         moves++;
 
         selected.flip();
@@ -61,11 +69,12 @@ public class Game {
             return TurnResult.FIRST_CARD_FLIPPED;
         }
 
+        secondFlippedCard = selected;
 
-        if (isMatch(firstFlippedCard, selected)){
+
+        if (isMatch(firstFlippedCard, secondFlippedCard)){
             firstFlippedCard.match();
-            selected.match();
-            firstFlippedCard = null;
+            secondFlippedCard.match();
             leaderboard.set(playerTurn, leaderboard.get(playerTurn) + 1);
             matches++;
             if (isGameOver()){
@@ -75,8 +84,7 @@ public class Game {
         }
 
         firstFlippedCard.hide();
-        selected.hide();
-        firstFlippedCard = null;
+        secondFlippedCard.hide();
         playerTurn = (playerTurn == 0) ? 1 : 0;
         return TurnResult.NO_MATCH;
     }
@@ -89,6 +97,7 @@ public class Game {
         return matches == board.getBoardSize().getTotalUniqueCards();
     }
 
+    @JsonIgnore
     public TurnResult getGameResult(){
         int playerOneScore = leaderboard.get(0);
         int playerTwoScore = leaderboard.get(1);
@@ -107,8 +116,16 @@ public class Game {
         return board;
     }
 
+    public int getBoardSize(){
+        return board.getBoardSize().getTotalCards();
+    }
+
     public Card getFirstFlippedCard() {
         return firstFlippedCard;
+    }
+
+    public Card getSecondFlippedCard() {
+        return secondFlippedCard;
     }
 
     public int getMoves() {

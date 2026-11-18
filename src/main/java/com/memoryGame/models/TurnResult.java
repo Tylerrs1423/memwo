@@ -7,5 +7,6 @@ public enum TurnResult {
     INVALID_MOVE,
     PLAYER_ONE_WINS,
     PLAYER_TWO_WINS,
-    DRAW
+    DRAW,
+    ONGOING
 }

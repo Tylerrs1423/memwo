@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class GameService {
     private final GameRepository gameRepository;
-    public record FlipResponse(Game game, TurnResult result, String revealedCardValue){}
+    public record FlipResponse(Game game, TurnResult result, String revealedCardValue, int cardId){}
 
     public GameService(GameRepository gameRepository) {
         this.gameRepository = gameRepository;
@@ -23,6 +23,11 @@ public class GameService {
     public FlipResponse flipCard(String gameId, int cardId){
         Game currentGame = gameRepository.getGame(gameId);
         TurnResult result = currentGame.selectCard(cardId);
-        return new FlipResponse(currentGame, result, currentGame.getBoard().getCard(cardId).getValue());
+        return new FlipResponse(currentGame, result, currentGame.getBoard().getCard(cardId).getValue(), cardId);
+    }
+
+    public boolean getGameResult(String gameId){
+        Game currentGame = gameRepository.getGame(gameId);
+        return currentGame.getGameResult() == TurnResult.PLAYER_ONE_WINS || currentGame.getGameResult() == TurnResult.PLAYER_TWO_WINS || currentGame.getGameResult() == TurnResult.DRAW;
     }
 }
